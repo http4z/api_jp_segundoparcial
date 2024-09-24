@@ -1,6 +1,3 @@
-//Josue Ignacio Paz Moran
-// 1290-21-5213
-
 const express = require('express');
 const app = express();
 
@@ -8,10 +5,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./app/config/db.config.js');
 
-const librosRouter = require('./app/routers/libros.router.js');
-const prestamosRouter = require('./app/routers/prestamos.router.js');
+const estudiantesRouter = require('./app/routers/estudiantes.router.js');
+const cursosRouter = require('./app/routers/cursos.router.js');
+const controlNotasRouter = require('./app/routers/control_notas.router.js');
 
-// force: true will drop the table if it already exists
 db.sequelize.sync({ force: true }).then(() => {
   console.log('Drop and Resync with { force: true }');
 });
@@ -24,9 +21,10 @@ app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 
-// Usar las rutas importadas
-app.use('/api', librosRouter);
-app.use('/api', prestamosRouter);
+// Usar las nuevas rutas
+app.use('/api', estudiantesRouter);
+app.use('/api', cursosRouter);
+app.use('/api', controlNotasRouter);
 
 app.get("/", (req, res) => {
   res.json({ message: "API funcionando correctamente" });
